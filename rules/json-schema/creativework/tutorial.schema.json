@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agennext.dev/grammar/creativework/tutorial.schema.json",
+  "title": "AGenNext Tutorial Grammar",
+  "allOf": [
+    { "$ref": "./base.schema.json" },
+    {
+      "type": "object",
+      "required": ["description", "text"],
+      "properties": {
+        "@type": { "enum": ["HowTo", "LearningResource"] },
+        "artifactKind": { "const": "tutorial" },
+        "description": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1 },
+        "teaches": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } }
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  ]
+}
