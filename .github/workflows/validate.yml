@@ -20,3 +20,6 @@ jobs:
 
       - name: Validate CreativeWork examples
         run: python scripts/validate_creativework.py --all
+
+      - name: Validate SurrealKit grammar source
+        run: python scripts/validate_surrealkit_source.py
