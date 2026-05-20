@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agennext.dev/grammar/creativework/blog.schema.json",
+  "title": "AGenNext Blog CreativeWork Grammar",
+  "allOf": [
+    { "$ref": "./base.schema.json" },
+    {
+      "type": "object",
+      "required": ["description", "text"],
+      "properties": {
+        "artifactKind": { "const": "blog" },
+        "description": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1 },
+        "keywords": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } }
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  ]
+}
