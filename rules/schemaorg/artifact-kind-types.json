@@ -1,0 +1,12 @@
+{
+  "prompt": ["CreativeWork"],
+  "skill": ["CreativeWork"],
+  "blog": ["BlogPosting", "Article"],
+  "readme": ["TechArticle", "CreativeWork"],
+  "api-doc": ["APIReference", "TechArticle"],
+  "course": ["Course"],
+  "tutorial": ["HowTo", "LearningResource"],
+  "policy": ["DigitalDocument", "CreativeWork"],
+  "protocol": ["TechArticle", "DigitalDocument"],
+  "spec": ["TechArticle", "DigitalDocument"]
+}
