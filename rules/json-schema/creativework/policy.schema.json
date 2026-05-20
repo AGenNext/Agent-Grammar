@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agennext.dev/grammar/creativework/policy.schema.json",
+  "title": "AGenNext Policy CreativeWork Grammar",
+  "allOf": [
+    { "$ref": "./base.schema.json" },
+    {
+      "type": "object",
+      "required": ["description", "text"],
+      "properties": {
+        "artifactKind": { "const": "policy" },
+        "description": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1 },
+        "authority": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  ]
+}
