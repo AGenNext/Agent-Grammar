@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agennext.dev/grammar/creativework/prompt.schema.json",
+  "title": "AGenNext Prompt CreativeWork Grammar",
+  "allOf": [
+    { "$ref": "./base.schema.json" },
+    {
+      "type": "object",
+      "required": ["text", "potentialAction"],
+      "properties": {
+        "artifactKind": { "const": "prompt" },
+        "text": { "type": "string", "minLength": 1 },
+        "potentialAction": {
+          "oneOf": [
+            { "$ref": "#/$defs/action" },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/action" }
+            }
+          ]
+        }
+      },
+      "$defs": {
+        "action": {
+          "type": "object",
+          "required": ["@type", "name"],
+          "properties": {
+            "@type": { "const": "Action" },
+            "name": { "type": "string", "minLength": 1 },
+            "description": { "type": "string" }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  ]
+}
