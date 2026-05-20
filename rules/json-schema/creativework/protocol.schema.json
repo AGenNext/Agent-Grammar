@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agennext.dev/grammar/creativework/protocol.schema.json",
+  "title": "AGenNext Protocol CreativeWork Grammar",
+  "allOf": [
+    { "$ref": "./base.schema.json" },
+    {
+      "type": "object",
+      "required": ["description", "text"],
+      "properties": {
+        "artifactKind": { "const": "protocol" },
+        "description": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1 },
+        "protocolVersion": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  ]
+}
