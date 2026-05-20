@@ -1,0 +1,39 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      SURREALDB_VERSION: v2.2.1
+
+    steps:
+      - name: Checkout Agent-Grammar
+        uses: actions/checkout@v4
+        with:
+          path: Agent-Grammar
+
+      - name: Install pinned SurrealDB
+        run: |
+          set -euo pipefail
+          curl -L "https://github.com/surrealdb/surrealdb/releases/download/${SURREALDB_VERSION}/surreal-${SURREALDB_VERSION}.linux-amd64.tgz" -o surreal.tgz
+          tar -xzf surreal.tgz
+          chmod +x surreal
+          sudo mv surreal /usr/local/bin/surreal
+          surreal version
+
+      - name: Run grammar database validation
+        run: |
+          set -euo pipefail
+
+          surreal start --user root --pass root memory --allow-all > surreal.log 2>&1 &
+          sleep 5
+
+          CONN="http://127.0.0.1:8000"
+          AUTH="--user root --pass root --ns agennext --db ci"
+
+          surreal sql --conn "$CONN" $AUTH < Agent-Grammar/rules/surrealql/artifact/artifact-native-object.v1.surql
+          surreal sql --conn "$CONN" $AUTH < Agent-Grammar/rules/surrealql/blueprint/source.v1.surql
