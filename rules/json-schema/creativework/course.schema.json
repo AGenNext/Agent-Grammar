@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agennext.dev/grammar/creativework/course.schema.json",
+  "title": "AGenNext Course Grammar",
+  "allOf": [
+    { "$ref": "./base.schema.json" },
+    {
+      "type": "object",
+      "required": ["description"],
+      "properties": {
+        "@type": { "const": "Course" },
+        "artifactKind": { "const": "course" },
+        "description": { "type": "string", "minLength": 1 },
+        "courseCode": { "type": "string" },
+        "educationalLevel": { "type": "string" },
+        "teaches": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } }
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  ]
+}
