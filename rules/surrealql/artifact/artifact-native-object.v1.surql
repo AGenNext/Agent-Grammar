@@ -70,8 +70,28 @@ UPSERT artifact_kind:blueprint SET
   grammar_owner = "Agent-Grammar",
   review_owner = "Agent-Review";
 
+UPSERT artifact_kind:skill SET
+  key = "skill",
+  label = "Skill",
+  owning_repo = "Agent-Skills",
+  native_table = "skill_source_v1",
+  semantic_class = "CreativeWork",
+  context_owner = "Agent-Graph",
+  grammar_owner = "Agent-Grammar",
+  review_owner = "Agent-Review";
+
 UPSERT artifact_contract_v1:blueprint SET
   artifact_kind = artifact_kind:blueprint,
+  canonical_representation = artifact_representation:native_record,
+  source_representation = artifact_representation:source_import,
+  published_representation = artifact_representation:published_export,
+  source_files_are_canonical = false,
+  native_database_record_required = true,
+  grammar_validation_required = true,
+  review_required_before_publish = true;
+
+UPSERT artifact_contract_v1:skill SET
+  artifact_kind = artifact_kind:skill,
   canonical_representation = artifact_representation:native_record,
   source_representation = artifact_representation:source_import,
   published_representation = artifact_representation:published_export,
