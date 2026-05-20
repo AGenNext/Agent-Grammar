@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agennext.dev/grammar/context/agent-graph-source.schema.json",
+  "title": "Agent-Graph Source Context Grammar",
+  "description": "Validates that AGenNext source artifacts use Agent-Graph context, not plain Schema.org context. Schema.org JSON-LD is generated only for published/export views.",
+  "type": "object",
+  "required": ["@context"],
+  "properties": {
+    "@context": {
+      "oneOf": [
+        { "const": "agennext:agent-graph" },
+        { "const": "https://github.com/AGenNext/Agent-Graph/context/agent-graph.jsonld" },
+        {
+          "type": "object",
+          "required": ["ag", "schema"],
+          "properties": {
+            "ag": { "const": "https://github.com/AGenNext/Agent-Graph/" },
+            "schema": { "const": "https://schema.org/" }
+          },
+          "additionalProperties": true
+        }
+      ]
+    }
+  },
+  "not": {
+    "properties": {
+      "@context": { "const": "https://schema.org" }
+    },
+    "required": ["@context"]
+  },
+  "additionalProperties": true
+}
