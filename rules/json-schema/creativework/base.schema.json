@@ -3,7 +3,7 @@
   "$id": "https://agennext.dev/grammar/creativework/base.schema.json",
   "title": "AGenNext CreativeWork Base Grammar",
   "type": "object",
-  "required": ["@context", "@type", "name"],
+  "required": ["@context", "@type", "name", "artifactKind"],
   "properties": {
     "@context": {
       "type": "string",
@@ -11,7 +11,11 @@
     },
     "@type": {
       "type": "string",
-      "const": "CreativeWork"
+      "minLength": 1
+    },
+    "artifactKind": {
+      "type": "string",
+      "minLength": 1
     },
     "name": {
       "type": "string",
@@ -25,12 +29,8 @@
     },
     "potentialAction": {
       "oneOf": [
-        {
-          "type": "object"
-        },
-        {
-          "type": "array"
-        }
+        { "type": "object" },
+        { "type": "array" }
       ]
     }
   },
