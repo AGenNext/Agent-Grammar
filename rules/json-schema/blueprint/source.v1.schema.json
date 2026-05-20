@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agennext.dev/grammar/blueprint/source.v1.schema.json",
+  "title": "AGenNext Blueprint Source Grammar v1",
+  "description": "Composite grammar for source blueprint documents. Enforces Agent-Graph context, ag:Blueprint type, objective/entity naming, and CreativeWork-compatible metadata.",
+  "type": "object",
+  "required": [
+    "@context",
+    "@type",
+    "blueprint_id",
+    "name",
+    "blueprint_type",
+    "objective",
+    "description",
+    "creator",
+    "dateCreated",
+    "agentGraphAlignment"
+  ],
+  "properties": {
+    "@context": {
+      "oneOf": [
+        { "const": "agennext:agent-graph" },
+        { "const": "https://github.com/AGenNext/Agent-Graph/context/agent-graph.jsonld" },
+        {
+          "type": "object",
+          "required": ["ag", "schema"],
+          "properties": {
+            "ag": { "const": "https://github.com/AGenNext/Agent-Graph/" },
+            "schema": { "const": "https://schema.org/" }
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "@type": {
+      "oneOf": [
+        { "const": "ag:Blueprint" },
+        { "const": "Blueprint" },
+        { "type": "array", "contains": { "const": "ag:Blueprint" } }
+      ]
+    },
+    "blueprint_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*-(agent|agent-team|workflow|protocol|capability|runtime-profile|role)$"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Za-z0-9]*( [A-Z][A-Za-z0-9]*)* (Agent|Agent Team|Workflow|Protocol|Capability|Runtime Profile|Role) Blueprint$"
+    },
+    "blueprint_type": {
+      "type": "string",
+      "enum": ["agent", "team", "workflow", "protocol", "capability", "runtime-profile", "role"]
+    },
+    "objective": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(_[a-z0-9]+)*$"
+    },
+    "description": { "type": "string", "minLength": 1 },
+    "creator": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "object" },
+        { "type": "array", "items": { "oneOf": [{ "type": "string" }, { "type": "object" }] } }
+      ]
+    },
+    "dateCreated": { "type": "string", "format": "date" },
+    "agentGraphAlignment": {
+      "type": "object",
+      "required": ["contextOwner", "semanticClass", "graphOwnership", "doesNotDefineGraphSchema"],
+      "properties": {
+        "contextOwner": { "const": "Agent-Graph" },
+        "semanticClass": { "const": "CreativeWork" },
+        "graphOwnership": { "const": "Agent-Graph" },
+        "doesNotDefineGraphSchema": { "const": true },
+        "publishedStructuredDataContext": { "const": "https://schema.org" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "blueprint_type": { "const": "team" } }, "required": ["blueprint_type"] },
+      "then": {
+        "properties": {
+          "name": { "pattern": " Agent Team Blueprint$" },
+          "blueprint_id": { "pattern": "-agent-team$" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "blueprint_type": { "const": "agent" } }, "required": ["blueprint_type"] },
+      "then": {
+        "properties": {
+          "name": { "pattern": " Agent Blueprint$" },
+          "blueprint_id": { "pattern": "-agent$" }
+        }
+      }
+    }
+  ],
+  "not": {
+    "properties": {
+      "@context": { "const": "https://schema.org" }
+    },
+    "required": ["@context"]
+  },
+  "additionalProperties": true
+}
