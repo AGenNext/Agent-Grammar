@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agennext.dev/grammar/creativework/api-doc.schema.json",
+  "title": "AGenNext API Documentation CreativeWork Grammar",
+  "allOf": [
+    { "$ref": "./base.schema.json" },
+    {
+      "type": "object",
+      "required": ["description", "text"],
+      "properties": {
+        "artifactKind": { "const": "api-doc" },
+        "description": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1 },
+        "apiVersion": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  ]
+}
