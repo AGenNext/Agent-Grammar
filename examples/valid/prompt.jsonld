@@ -1,0 +1,12 @@
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "artifactKind": "prompt",
+  "name": "Example Prompt",
+  "description": "A valid prompt CreativeWork.",
+  "text": "Inspect the repository and update the files requested by the task.",
+  "potentialAction": {
+    "@type": "Action",
+    "name": "Update repository files"
+  }
+}
