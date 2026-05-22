@@ -18,6 +18,9 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Validate schema.org grounding
+        run: python scripts/validate_schemaorg_grounding.py
+
       - name: Validate CreativeWork examples
         run: python scripts/validate_creativework.py --all
 
